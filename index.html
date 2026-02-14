@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Ultimate</title>
+<style>
+/* ===== Fonts & Body ===== */
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Indie+Flower&display=swap');
+body{
+  margin:0;
+  font-family:'Indie Flower', cursive;
+  background:url('nailong.png') no-repeat center center fixed;
+  background-size:cover;
+  overflow:hidden;
+  color:#fff;
+  user-select:none;
+}
+
+/* ===== Logo ===== */
+#logo{
+  display:block;
+  margin:20px auto;
+  width:150px;
+  animation:logoAnim 2s ease-out forwards;
+  opacity:0;
+}
+@keyframes logoAnim{
+  0%{transform:scale(0.5) rotate(-15deg); opacity:0;}
+  100%{transform:scale(1) rotate(0deg); opacity:1;}
+}
+
+/* ===== Card ===== */
+.card{
+  background: rgba(0,0,0,0.25);
+  border-radius: 20px;
+  padding: 15px;
+  margin: 15px;
+  opacity:0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+  font-family:'Gloria Hallelujah', cursive;
+  text-shadow:1px 1px 4px rgba(0,0,0,0.5);
+}
+.card.visible{
+  opacity:1;
+  transform: translateY(0);
+}
+
+/* ===== Buttons ===== */
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:25px;
+  background:#ff69b4;
+  color:white;
+  font-size:16px;
+  margin:10px;
+  box-shadow:0 0 10px rgba(255,182,193,0.5);
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px rgba(255,105,180,0.8);
+}
+
+/* ===== Kelinci ===== */
+#petBunny{
+  width:120px;
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  cursor:pointer;
+  z-index:999;
+}
+
+/* ===== Foto Random ===== */
+#randomFotos img{
+  width:120px;
+  margin:5px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.5);
+  transform:scale(0);
+  opacity:0;
+  transition:all 0.8s ease-out;
+}
+#randomFotos img.show{
+  transform:scale(1);
+  opacity:1;
+}
+
+/* ===== Hearts & Flowers ===== */
+.flower, .heart{
+  position:fixed;
+  font-size:20px;
+  pointer-events:none;
+  animation:fly 2s forwards;
+}
+@keyframes fly{
+  0%{opacity:1; transform:translateY(0);}
+  100%{opacity:0; transform:translateY(-120px);}
+}
+
+/* ===== Popup Coklat ===== */
+#popup{
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background: rgba(255,105,180,0.95);
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  font-size:20px;
+  z-index:9999;
+  transition:all 0.5s ease-out;
+  font-family:'Indie Flower', cursive;
+}
+#popup.show{
+  transform:translate(-50%,-50%) scale(1);
+}
+
+/* ===== Kotak NPC ===== */
+#npcBox{
+  background: rgba(255,182,193,0.4);
+  padding:12px;
+  border-radius:15px;
+  font-style:italic;
+  margin:15px;
+  text-shadow:1px 1px 4px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+<body>
+
+<!-- Logo & Halaman Awal -->
+<div id="home" class="card" style="text-align:center;">
+  <img id="logo" src="nattsoo.png">
+  <h1>I love you more 💕</h1>
+  <div class="heart" style="font-size:90px; animation:pulse 1s infinite;">❤️</div>
+  <p>Pencet kotak pesan ini 💌</p>
+  <button onclick="showMessageBox()">💌 Buka Kotak Pesan</button>
+</div>
+
+<!-- Kotak Pesan Special -->
+<div class="card" id="messageBox" style="display:none; text-align:center;">
+  <h2>💌 Kirim Pesan Valentine</h2>
+  <input id="nama" placeholder="Nama kamu">
+  <input id="alamat" placeholder="Alamat pengagum">
+  <br>
+  <button onclick="sendWA()">Kirim ke WA</button>
+</div>
+
+<!-- Kelinci -->
+<img src="Pet_Bunny.png" id="petBunny">
+
+<!-- Diary Harian -->
+<div class="card">
+  <h2>📅 Minggu 1 Februari 2026</h2>
+  <img src="oktoviana.png" style="display:block;margin:auto;border-radius:10px;width:150px;">
+  <p><b>Cerita Harian:</b> Flashback kepada wanita cantik dan imut menggemaskan.</p>
+  <h3>NAMA: OKTAVIANA MAURA</h3>
+  <p>Umurnya sekarang 16 tahun, OTW 17 di Oktober. Lahir 5-10-2009. Seni beladiri (Silat).</p>
+  <h3>Sifat</h3>
+  <p>Unik, random, manis, baik, lucu, ngangenin, bikin nyaman 😹. Special wle.</p>
+  <h3>BAGIKU</h3>
+  <p>Dia adalah bentuk dari kata: <b>Istimewa</b></p>
+  <h3>Makna Namanya</h3>
+  <p>Oktaviana Maura (Mawar di bulan Oktober)</p>
+  <h3>Perasaan</h3>
+  <p>Rasa sukaku pasih dan aktif, rinduku luar biasa, senyum lucunya selalu ngangenin.</p>
+  <audio id="musDiary" src="maafkanlah.mp3"></audio>
+  <button onclick="playDiary()">💖 Putar Musik Diary Harian</button>
+</div>
+
+<!-- Pertanyaan Interaktif -->
+<div class="card">
+  <h2>🎵 Pertanyaan Valentine</h2>
+  <p>Kalo orang lain bilang <b>I love you</b> tentangmu, maka aku ...</p>
+  <audio id="musLove" src="pemuja_rahasia.mp3"></audio>
+  <button onclick="playLove()">💗 Putar Lagu Pemuja Rahasia</button>
+</div>
+
+<!-- Foto Random / Gallery -->
+<div class="card" style="text-align:center;">
+  <h2>Foto Tambahan</h2>
+  <div id="randomFotos">
+    <img src="oktoviana.png">
+    <img src="oktoviana2.png">
+    <img src="oktoviana.png">
+  </div>
+  <button onclick="gantiFoto()">Ganti Foto Random</button>
+</div>
+
+<!-- NPC Box -->
+<div class="card" id="npcBox">
+  NPC: Diary kamu lucu kaya kamu 😆
+  <br>
+  <button onclick="npcTalk()">NPC Ngomong Lagi</button>
+</div>
+
+<!-- Mini Game -->
+<div class="card" style="text-align:center;">
+  <h2>🎮 Game Klik Hati</h2>
+  <p>Klik hati yang muncul di layar sampai 10 kali untuk menang!</p>
+  <p id="score">Score: 0</p>
+</div>
+
+<!-- Popup Coklat -->
+<div id="popup">🎉 Selamat! Kamu dapat Coklat 🍫💖</div>
+
+<script>
+// ===== Logo & Card Animasi =====
+window.onload = () => {
+  document.getElementById("logo").style.opacity=1;
+  let cards = document.querySelectorAll(".card");
+  cards.forEach((c,i)=>{
+    setTimeout(()=>c.classList.add("visible"), i*300);
+  });
+}
+
+// ===== Kotak Pesan Special =====
+function showMessageBox(){
+  let box = document.getElementById("messageBox");
+  box.style.display="block";
+  box.style.transform="scale(0.5)";
+  box.style.opacity=0;
+  setTimeout(()=>{box.style.transition="all 0.5s"; box.style.transform="scale(1)"; box.style.opacity=1;},50);
+}
+function sendWA(){
+  let nama=document.getElementById("nama").value;
+  let alamat=document.getElementById("alamat").value;
+  if(!nama || !alamat){alert("Isi dulu nama dan alamat 😼"); return;}
+  let msg=`Hai 💖%0ANama: ${nama}%0AAlamat Pengagum: ${alamat}`;
+  window.open("https://wa.me/6289516129314?text="+msg);
+  for(let i=0;i<10;i++){
+    let f=document.createElement("div");
+    f.innerHTML=["💗","🌸","✨"][Math.floor(Math.random()*3)];
+    f.className="flower";
+    f.style.left=(Math.random()*window.innerWidth)+"px";
+    f.style.top=(Math.random()*window.innerHeight)+"px";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),2000);
+  }
+}
+
+// ===== Kelinci =====
+let bunny=document.getElementById("petBunny");
+document.addEventListener("mousemove",(e)=>{
+  bunny.style.left=(e.clientX - 60)+"px";
+  bunny.style.top=(e.clientY - 60)+"px";
+});
+bunny.addEventListener("click", ()=>{
+  for(let i=0;i<5;i++){
+    let f=document.createElement("div");
+    f.innerHTML=["💗","🌸","✨"][Math.floor(Math.random()*3)];
+    f.className="flower";
+    f.style.left=(bunny.offsetLeft + Math.random()*60-30)+"px";
+    f.style.top=(bunny.offsetTop + Math.random()*60-30)+"px";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),2000);
+  }
+});
+
+// ===== Foto Random =====
+let fotoArray=["oktoviana.png","oktoviana2.png"];
+function gantiFoto(){
+  let imgs=document.querySelectorAll("#randomFotos img");
+  imgs.forEach((img)=>{
+    let r=Math.floor(Math.random()*fotoArray.length);
+    img.src = fotoArray[r];
+    img.classList.add("show");
+    setTimeout(()=>img.classList.remove("show"),800);
+  });
+}
+
+// ===== Musik =====
+let musDiary=document.getElementById("musDiary");
+function playDiary(){ musDiary.play(); }
+let musLove=document.getElementById("musLove");
+function playLove(){ 
+  musLove.play();
+  let heart=document.createElement("div");
+  heart.innerHTML="💖";
+  heart.className="heart";
+  heart.style.left="50%";
+  heart.style.top="50%";
+  heart.style.fontSize="50px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),1500);
+}
+
+// ===== Mini Game =====
+let score=0;
+let totalScore=10;
+function spawnHeart(){
+  let h=document.createElement("div");
+  h.innerHTML="💗";
+  h.style.position="fixed";
+  h.style.left=Math.random()*(window.innerWidth-50)+"px";
+  h.style.top=Math.random()*(window.innerHeight-50)+"px";
+  h.style.fontSize="30px";
+  h.style.cursor="pointer";
+  document.body.appendChild(h);
+  h.addEventListener("click", ()=>{
+    score++;
+    document.getElementById("score").innerText="Score: "+score;
+    h.remove();
+    if(score>=totalScore){
+      document.getElementById("popup").classList.add("show");
+      for(let i=0;i<20;i++){
+        let f=document.createElement("div");
+        f.innerHTML="💗";
+        f.className="flower";
+        f.style.left=(Math.random()*window.innerWidth)+"px";
+        f.style.top=(Math.random()*window.innerHeight)+"px";
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),2000);
+      }
+    }
+  });
+  setTimeout(()=>h.remove(),5000);
+}
+setInterval(spawnHeart,1000);
+
+// ===== Klik di halaman muncul bunga/hati =====
+document.addEventListener("click",(e)=>{
+  for(let i=0;i<3;i++){
+    let f=document.createElement("div");
+    f.innerHTML=["💗","🌸","✨"][Math.floor(Math.random()*3)];
+    f.className="flower";
+    f.style.left=(e.clientX+Math.random()*40-20)+"px";
+    f.style.top=(e.clientY+Math.random()*40-20)+"px";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),2000);
+  }
+});
+
+// ===== NPC =====
+let npcLines=[
+  "Diary kamu lucu kaya kamu 😆",
+  "Aku suka cara kamu nulis perasaan 💕",
+  "Kamu itu NPC favorit di hidupku 😼",
+  "Kalau cinta itu game, kamu final boss 💖",
+  "Jangan berhenti nulis ya, lucu soalnya 🌸"
+];
+function npcTalk(){
+  let r=Math.floor(Math.random()*npcLines.length);
+  document.getElementById("npcBox").innerText="NPC: "+npcLines[r];
+  // tambah tombol lagi
+  let btn=document.createElement("button");
+  btn.innerText="NPC Ngomong Lagi";
+  btn.onclick=npcTalk;
+  document.getElementById("npcBox").appendChild(btn);
+}
+</script>
+
+</body>
+</html>
